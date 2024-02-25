@@ -1,1 +1,24 @@
 https://reactrouter.com/en/main/start/tutorial#setup
+
+
+...-foreground  (cor inversa do fundo da aplicacao - baseado no tema)
+..color.../5 (5% de opacidade)
+
+talwild:
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+
+toda cor vem com o default e seu foreground
+
+por exemplo, usamos o default para o Background, mas para o texto usamos o foreground
+
+- nao utilize nomes das cores nas variaveis , mas sim nomes sugestivos (muted, accent etc) - para qnd mudar o tema nao confundir
+
+
+________________________
+
+
+space-y-4   -> trabalha com margin ao inves de trabalhar com gap
+
