@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Helmet } from 'react-helmet-async'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -8,7 +9,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 const signInForm = z.object({
-  email: z.string().email(),
+  email: z.string().email('E-mail inválido'),
+  password: z.string().min(6, 'Senha deve ter no mínimo 6 dígitos'),
 })
 
 type SignInForm = z.infer<typeof signInForm>
@@ -17,19 +19,32 @@ export function SignIn() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { isSubmitting },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInForm),
     defaultValues: {
       email: '',
+      password: '',
     },
   })
 
   async function handleSignIn(data: SignInForm) {
-    console.log(data)
     await new Promise((resolve) => setTimeout(resolve, 2000))
-    reset()
+    toast.success('Enviamos um link de autenticação para o seu e-mail.', {
+      duration: 4000,
+      action: {
+        label: 'Reenviar',
+        onClick: () => handleSignIn(data),
+      },
+    })
+  }
+
+  function onFormError(errorFields: FieldErrors<SignInForm>) {
+    Object.values(errorFields).forEach((error) => {
+      toast.error(error.message, {
+        duration: 2000,
+      })
+    })
   }
 
   return (
@@ -46,10 +61,15 @@ export function SignIn() {
             </p>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}>
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmit(handleSignIn, onFormError)}
+          >
             <div className="space-y-2">
               <Label htmlFor="email">Seu e-mail</Label>
               <Input type="email" id="email" {...register('email')} />
+              <Label htmlFor="senha">Sua senha</Label>
+              <Input type="password" id="senha" {...register('password')} />
             </div>
 
             <Button disabled={isSubmitting} className="w-full">
