@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 const signUpForm = z.object({
-  // informe as mensagens de erro customizadas para cada campo - note que coloquei o mínimo de 1 caracter para campo .string(), nao aceitando assim string vazia
   restaurantName: z.string().min(1, 'Insira o nome do seu estabelecimento.'),
   managerName: z.string().min(1, 'Insira o seu nome.'),
   email: z.string().email('E-mail inválido'),
@@ -27,10 +26,7 @@ export function SignUp() {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<ISignUpForm>({
-    // precisamos passar o resolver: zodResolver(signUpForm) para o nosso formulario usar a validacao do zod!!
-    // importante o resolver, pois sem ele o nosso forms sempre q clicarmos no botao submit, irá chamar a funcao handleSubmit (mesmo com erros no formulario ou campos sem preencher!!)
     resolver: zodResolver(signUpForm),
-    // informe os valores defaults
     defaultValues: {
       restaurantName: '',
       managerName: '',
@@ -43,21 +39,12 @@ export function SignUp() {
     await new Promise((resolve) => setTimeout(resolve, 2000))
     console.log(data)
     toast.success('Restaurante cadastrado com sucesso.', {
-      // duration é a duração do toast em milisegundos
       duration: 6000,
       description: 'Agora, faça login para acessar o Dashboard.',
     })
-    // aqui nao coloquei o navigate no button dentro do toast, mas fora mesmo. nao se preocupe, ele vai continar vizivel por 6 segundos la na pagina de login (achei mais intuitivo assim)
     navigate('/sign-in')
   }
 
-  /*
-  e aqui será a nossa funcao quando tiver algum erro de validacao do zod! ele recebe os campos com erros!!
-  observe q o parametro errorFields (pode chamar do q preferir) é um objeto. 
-   - cada chave desse objeto é o nome q usamos no register de cada input, por exemplo, o do estabelecimento é 'restaurantName'
-   - e o valor de cada chave é a mensagem de erro padrão que veio do zod para cada campo (ou a mensagem q vc especificou)
-  por isso uso o Object.values(errorFields) para transformar em um array com os valores de cada chave (ou seja, um array com as mensagens de erros!! e é o q precisamos, pois iremos usar o toas com cada mensagem)
-  */
   function onFormError(errorFields: FieldErrors<ISignUpForm>) {
     Object.values(errorFields).forEach((error) => {
       toast.error(error.message, {
@@ -86,7 +73,6 @@ export function SignUp() {
 
           <form
             className="space-y-4"
-            // segundo parâmetro da funcao handleSubmit do react-hook-form permite vc passar uma funcao para obter os erros do formulario - q no caso estamos validando com o zod
             onSubmit={handleSubmit(handleSignUp, onFormError)}
           >
             <div className="space-y-2">
