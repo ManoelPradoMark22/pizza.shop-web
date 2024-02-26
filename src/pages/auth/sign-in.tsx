@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Helmet } from 'react-helmet-async'
 import { FieldErrors, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -12,21 +13,21 @@ const signInForm = z.object({
   email: z.string().email('E-mail inválido'),
 })
 
-type SignInForm = z.infer<typeof signInForm>
+type ISignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignInForm>({
+  } = useForm<ISignInForm>({
     resolver: zodResolver(signInForm),
     defaultValues: {
       email: '',
     },
   })
 
-  async function handleSignIn(data: SignInForm) {
+  async function handleSignIn(data: ISignInForm) {
     await new Promise((resolve) => setTimeout(resolve, 2000))
     toast.success('Enviamos um link de autenticação para o seu e-mail.', {
       duration: 4000,
@@ -37,7 +38,7 @@ export function SignIn() {
     })
   }
 
-  function onFormError(errorFields: FieldErrors<SignInForm>) {
+  function onFormError(errorFields: FieldErrors<ISignInForm>) {
     Object.values(errorFields).forEach((error) => {
       toast.error(error.message, {
         duration: 2000,
@@ -49,6 +50,10 @@ export function SignIn() {
     <>
       <Helmet title="Login" />
       <div className="flex w-[350px] min-w-[100%] items-center justify-center p-8">
+        <Button variant="ghost" asChild className="absolute right-8 top-8">
+          <Link to="/sign-up">Novo estabelecimento</Link>
+        </Button>
+
         <div className="flex w-[100%] max-w-[400px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
