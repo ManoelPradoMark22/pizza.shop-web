@@ -31,3 +31,6 @@ space-y-4   -> trabalha com margin ao inves de trabalhar com gap
 
 
 <div className="flex min-h-screen"> -> ocupar no minimo a altura da tela toda
+
+
+ <div className="ml-auto"> -> estando dentro de uma div flex, ml-auto vai jogar o conteudo dessa div em questao para total direita
