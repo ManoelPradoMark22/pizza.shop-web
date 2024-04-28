@@ -34,3 +34,5 @@ space-y-4   -> trabalha com margin ao inves de trabalhar com gap
 
 
  <div className="ml-auto"> -> estando dentro de uma div flex, ml-auto vai jogar o conteudo dessa div em questao para total direita
+
+ <TableCell className="font-mono">3ghj34g33vj3v4j3</TableCell> -> font-mono usa uma font mono espaçada, dessa forma os ids terão a mesma largura
