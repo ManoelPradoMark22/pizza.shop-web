@@ -46,3 +46,8 @@ bolinha de status ao lado da label do status
                     Pendente
                   </span>
                 </div>
+
+------------
+
+recharts -> for charts.
+example shadcn-ui: https://github.com/shadcn-ui/ui/blob/main/apps/www/app/(app)/examples/dashboard/components/overview.tsx
