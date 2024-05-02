@@ -56,9 +56,9 @@ export function PopularProductsChart() {
                     textAnchor={x > cx ? 'start' : 'end'}
                     dominantBaseline="central"
                   >
-                    {data[index].product.length > 12
+                    {data[index].product.length > 16
                       ? data[index].product.substring(0, 12).concat('...')
-                      : data[index].product}{' '}
+                      : data[index].product}
                     ({value})
                   </text>
                 )
