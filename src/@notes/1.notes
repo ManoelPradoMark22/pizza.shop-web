@@ -51,3 +51,8 @@ bolinha de status ao lado da label do status
 
 recharts -> for charts.
 example shadcn-ui: https://github.com/shadcn-ui/ui/blob/main/apps/www/app/(app)/examples/dashboard/components/overview.tsx
+
+-------------
+
+commits sobre as mudanças nos gráficos (LINE and PIE)
+https://github.com/ManoelPradoMark22/pizza.shop-web/commits/master/?since=2024-05-01&until=2024-05-01
