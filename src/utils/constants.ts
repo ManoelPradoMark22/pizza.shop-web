@@ -22,3 +22,8 @@ export const COLORS = [
   colors.emerald['500'],
   colors.rose['500'],
 ]
+
+export const QUERY_KEYS = {
+  GET_PROFILE_KEY: ['get-profile'],
+  GET_MANAGED_RESTAURANT_KEY: ['get-managed-restaurant'],
+} as const
