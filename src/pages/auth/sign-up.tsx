@@ -8,6 +8,8 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useMutation } from '@tanstack/react-query'
+import { registerRestaurant } from '@/api/register-restaurant'
 
 const signUpForm = z.object({
   restaurantName: z.string().min(1, 'Insira o nome do seu estabelecimento.'),
@@ -35,13 +37,27 @@ export function SignUp() {
     },
   })
 
+  const { mutateAsync: registerRestaurantFn } = useMutation({
+    mutationFn: registerRestaurant
+  })
+
   async function handleSignUp(data: ISignUpForm) {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    toast.success('Restaurante cadastrado com sucesso.', {
-      duration: 6000,
-      description: 'Agora, faça login para acessar o Dashboard.',
-    })
-    navigate('/sign-in')
+    try{
+      await registerRestaurantFn({
+        email: data.email ,
+        managerName: data.managerName ,
+        restaurantName: data.restaurantName ,
+        phone: data.phone ,
+      })
+
+      toast.success('Restaurante cadastrado com sucesso.', {
+        duration: 6000,
+        description: 'Agora, faça login para acessar o Dashboard.',
+      })
+      navigate(`/sign-in?email=${data.email}`)
+    }catch(e) {
+      toast.error('Erro ao cadastrar restaurante.')
+    }
   }
 
   function onFormError(errorFields: FieldErrors<ISignUpForm>) {
