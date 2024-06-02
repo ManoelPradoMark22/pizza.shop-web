@@ -48,6 +48,13 @@ export function PopularProductsChart() {
                 const x = cx + radius * Math.cos(-midAngle * RADIAN)
                 const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
+                const MAX_LENGTH = 16;
+                const productInfo = `${
+                  data[index].product.length > MAX_LENGTH
+                      ? data[index].product.substring(0, MAX_LENGTH).concat('...')
+                      : `${data[index].product}${' '}`
+                }(${value})`
+
                 return (
                   <text
                     x={x}
@@ -56,10 +63,7 @@ export function PopularProductsChart() {
                     textAnchor={x > cx ? 'start' : 'end'}
                     dominantBaseline="central"
                   >
-                    {data[index].product.length > 16
-                      ? data[index].product.substring(0, 16).concat('...')
-                      : `${data[index].product}${' '}`}
-                    ({value})
+                    {productInfo}
                   </text>
                 )
               }}
