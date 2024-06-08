@@ -33,7 +33,11 @@ const storeProfileSchema = z.object({
 
 type IStoreProfileSchema = z.infer<typeof storeProfileSchema>
 
-export function StoreProfileDialog() {
+type IStoreProfileDialog = {
+  onClose: () => void
+}
+
+export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
   const queryClient = useQueryClient()
   const { data: managedRestaurant } = useQuery({
     queryKey: GET_MANAGED_RESTAURANT_KEY,
@@ -76,13 +80,18 @@ export function StoreProfileDialog() {
 
   async function handleUpdateProfile(data: IStoreProfileSchema) {
     try {
+      toast.loading('Atualizando perfil')
+
       await mutateAsync({
         name: data.name,
         description: data.description,
       })
 
+      toast.dismiss()
       toast.success('Perfil atualizado com sucesso!')
+      onClose()
     } catch (e) {
+      toast.dismiss()
       toast.success('Erro ao atualizar o perfil, tente novamente.')
     }
   }
