@@ -24,12 +24,14 @@ export function AccountMenu() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: GET_PROFILE_KEY,
     queryFn: getProfile,
+    staleTime: Infinity,
   })
 
   const { data: managedRestaurant, isLoading: isLoadingManagedRestaurant } =
     useQuery({
       queryKey: GET_MANAGED_RESTAURANT_KEY,
       queryFn: getManagedRestaurant,
+      staleTime: Infinity,
     })
 
   return (
@@ -50,7 +52,7 @@ export function AccountMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel className="flex flex-col">
-            {isLoadingManagedRestaurant ? (
+            {isLoadingProfile ? (
               <div className="space-y-1.5">
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="h-3 w-32" />
