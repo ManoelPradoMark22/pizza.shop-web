@@ -28,7 +28,7 @@ const { GET_MANAGED_RESTAURANT_KEY } = QUERY_KEYS
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
-  description: z.string(),
+  description: z.string().nullable(),
 })
 
 type IStoreProfileSchema = z.infer<typeof storeProfileSchema>
@@ -58,22 +58,45 @@ export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
     },
   })
 
+  type IUpdateManagedRestaurantCacheReturn = {
+    previousProfile?: IGetManagedRestaurantResponse
+  }
+
+  function updateManagedRestaurantCache({
+    name,
+    description,
+  }: IStoreProfileSchema): IUpdateManagedRestaurantCacheReturn {
+    const oldCached = queryClient.getQueryData<IGetManagedRestaurantResponse>(
+      GET_MANAGED_RESTAURANT_KEY,
+    )
+
+    if (oldCached) {
+      queryClient.setQueryData<IGetManagedRestaurantResponse>(
+        GET_MANAGED_RESTAURANT_KEY,
+        {
+          ...oldCached,
+          name,
+          description,
+        },
+      )
+    }
+
+    return { previousProfile: oldCached }
+  }
+
   const { mutateAsync } = useMutation({
     mutationFn: updateProfile,
-    onSuccess(_data, { name, description }) {
-      const oldCached = queryClient.getQueryData<IGetManagedRestaurantResponse>(
-        GET_MANAGED_RESTAURANT_KEY,
-      )
+    onMutate: ({ name, description }) => {
+      const { previousProfile } = updateManagedRestaurantCache({
+        name,
+        description,
+      })
 
-      if (oldCached) {
-        queryClient.setQueryData<IGetManagedRestaurantResponse>(
-          GET_MANAGED_RESTAURANT_KEY,
-          {
-            ...oldCached,
-            name,
-            description,
-          },
-        )
+      return { previousProfile }
+    },
+    onError: (_error, __variables, context) => {
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(context.previousProfile)
       }
     },
   })
@@ -82,6 +105,8 @@ export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
     try {
       toast.loading('Atualizando perfil')
 
+      onClose()
+
       await mutateAsync({
         name: data.name,
         description: data.description,
@@ -89,10 +114,9 @@ export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
 
       toast.dismiss()
       toast.success('Perfil atualizado com sucesso!')
-      onClose()
     } catch (e) {
       toast.dismiss()
-      toast.success('Erro ao atualizar o perfil, tente novamente.')
+      toast.error('Erro ao atualizar o perfil, tente novamente.')
     }
   }
 
