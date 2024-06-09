@@ -49,7 +49,7 @@ export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = useForm<IStoreProfileSchema>({
     resolver: zodResolver(storeProfileSchema),
     values: {
@@ -161,7 +161,11 @@ export function StoreProfileDialog({ onClose }: IStoreProfileDialog) {
               Cancelar
             </Button>
           </DialogClose>
-          <Button type="submit" disabled={isSubmitting} variant="success">
+          <Button
+            type="submit"
+            disabled={isSubmitting || !isDirty}
+            variant="success"
+          >
             Salvar
           </Button>
         </DialogFooter>
