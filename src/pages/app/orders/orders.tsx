@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
+import { useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
 
 import { getOrders } from '@/api/get-orders'
 import { Pagination } from '@/components/pagination'
@@ -11,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { QUERY_KEYS } from '@/utils/constants'
+import { parsedPageIndex } from '@/utils/functions'
 
 import { OrderTableFilters } from './order-table-filters'
 import { OrderTableRow } from './order-table-row'
@@ -18,9 +21,18 @@ import { OrderTableRow } from './order-table-row'
 const { GET_ORDERS } = QUERY_KEYS
 
 export function Orders() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pageParam = searchParams.get('page') ?? '1'
+
+  const pageIndex = z.coerce
+    .number()
+    .transform((page) => page - 1)
+    .parse(parsedPageIndex(pageParam) ?? '1')
+
   const { data: result } = useQuery({
     queryKey: GET_ORDERS,
-    queryFn: getOrders,
+    queryFn: () => getOrders({ pageIndex }),
   })
 
   return (

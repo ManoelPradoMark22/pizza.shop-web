@@ -1,5 +1,17 @@
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { z } from 'zod'
+
+export const parsedPageIndex = (page: string) => {
+  const pageSchema = z.preprocess((arg) => {
+    const str = typeof arg === 'string' ? arg : undefined
+    const parsed = str ? parseInt(str, 10) : NaN
+    return isNaN(parsed) ? undefined : parsed
+  }, z.number().int().min(1).optional())
+
+  const result = pageSchema.safeParse(page)
+  return result.success ? result.data : undefined
+}
 
 export function currencyBRL(value: number) {
   return value.toLocaleString('pt-BR', {
