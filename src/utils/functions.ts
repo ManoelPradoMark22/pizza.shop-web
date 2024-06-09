@@ -1,7 +1,17 @@
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
 export function currencyBRL(value: number) {
   return value.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
+  })
+}
+
+export function timeAgo(dateStr: string) {
+  return formatDistanceToNow(dateStr, {
+    locale: ptBR,
+    addSuffix: true,
   })
 }
 
