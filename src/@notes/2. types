@@ -1,0 +1,55 @@
+const orderFiltersSchema = z.object({
+  orderId: z.string().optional(),
+  customerName: z.string().optional(),
+  status: z.string().optional(),
+})
+
+type IOrderFiltersSchema = z.infer<typeof orderFiltersSchema>
+
+const keysOrderFiltersSchema = Object.keys(orderFiltersSchema.shape) as Array<
+  keyof IOrderFiltersSchema
+>
+
+para retornar de forma pragmática um array das chaves do objeto zod!
+//console.log(keysOrderFiltersSchema) 
+[
+    "orderId",
+    "customerName",
+    "status"
+]
+
+---------------------------------
+
+export function OrderTableFilters() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filters = {
+    orderId: searchParams.get('orderId') ?? '',
+    customerName: searchParams.get('customerName') ?? '',
+    status: searchParams.get('status') ?? 'all',
+  }
+
+  const { register, handleSubmit, control } = useForm<IOrderFiltersSchema>({
+    resolver: zodResolver(orderFiltersSchema),
+    defaultValues: {
+      orderId: filters.orderId,
+      customerName: filters.customerName,
+      status: filters.status,
+    },
+  })
+
+  function handleFilter(filterParams: IOrderFiltersSchema) {
+    setSearchParams((state) => {
+      keysOrderFiltersSchema.forEach((key) => {
+        const filter = filterParams[key]
+        if (filter) {
+          state.set(key, filter)
+        } else {
+          state.delete(key)
+        }
+      })
+
+      state.set('page', '1')
+
+      return state
+    })
+  }

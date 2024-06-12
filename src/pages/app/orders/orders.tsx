@@ -23,6 +23,12 @@ const { GET_ORDERS } = QUERY_KEYS
 export function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const filterParams = {
+    orderId: searchParams.get('orderId') ?? '',
+    customerName: searchParams.get('customerName') ?? '',
+    status: searchParams.get('status') ?? 'all',
+  }
+
   const pageParam = searchParams.get('page') ?? '1'
 
   const pageIndex = z.coerce
@@ -31,8 +37,20 @@ export function Orders() {
     .parse(parsedPageIndex(pageParam) ?? 1)
 
   const { data: result } = useQuery({
-    queryKey: [GET_ORDERS, pageIndex],
-    queryFn: () => getOrders({ pageIndex }),
+    queryKey: [
+      GET_ORDERS,
+      pageIndex,
+      filterParams.orderId,
+      filterParams.customerName,
+      filterParams.status,
+    ],
+    queryFn: () =>
+      getOrders({
+        pageIndex,
+        orderId: filterParams.orderId,
+        customerName: filterParams.customerName,
+        status: filterParams.status === 'all' ? null : filterParams.status,
+      }),
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   })
