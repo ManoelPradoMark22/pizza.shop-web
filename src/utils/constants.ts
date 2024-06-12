@@ -26,5 +26,5 @@ export const COLORS = [
 export const QUERY_KEYS = {
   GET_PROFILE_KEY: ['get-profile'],
   GET_MANAGED_RESTAURANT_KEY: ['get-managed-restaurant'],
-  GET_ORDERS: ['get-orders'],
+  GET_ORDERS: 'get-orders',
 } as const

@@ -28,12 +28,21 @@ export function Orders() {
   const pageIndex = z.coerce
     .number()
     .transform((page) => page - 1)
-    .parse(parsedPageIndex(pageParam) ?? '1')
+    .parse(parsedPageIndex(pageParam) ?? 1)
 
   const { data: result } = useQuery({
-    queryKey: GET_ORDERS,
+    queryKey: [GET_ORDERS, pageIndex],
     queryFn: () => getOrders({ pageIndex }),
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   })
+
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((state) => {
+      state.set('page', (pageIndex + 1).toString())
+      return state
+    })
+  }
 
   return (
     <>
@@ -67,7 +76,14 @@ export function Orders() {
             </Table>
           </div>
 
-          <Pagination pageIndex={0} totalCount={105} perPage={10} />
+          {result && (
+            <Pagination
+              pageIndex={result.meta.pageIndex}
+              totalCount={result.meta.totalCount}
+              perPage={result.meta.perPage}
+              onPageChange={handlePaginate}
+            />
+          )}
         </div>
       </div>
     </>
