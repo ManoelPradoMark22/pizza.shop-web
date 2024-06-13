@@ -1,4 +1,5 @@
 import { ArrowRight, Search, X } from 'lucide-react'
+import { useState } from 'react'
 
 import { IOrder } from '@/api/get-orders'
 import { OrderStatus } from '@/components/order-status'
@@ -14,10 +15,12 @@ export interface IOrderTableRow {
 }
 
 export function OrderTableRow({ order }: IOrderTableRow) {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="xs">
               <Search className="h-3 w-3" />
@@ -25,7 +28,7 @@ export function OrderTableRow({ order }: IOrderTableRow) {
             </Button>
           </DialogTrigger>
 
-          <OrderDetails />
+          <OrderDetails orderId={order.orderId} isOpen={isDetailsOpen} />
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
@@ -38,7 +41,9 @@ export function OrderTableRow({ order }: IOrderTableRow) {
         <OrderStatus status={order.status} />
       </TableCell>
       <TableCell className="font-medium">{order.customerName}</TableCell>
-      <TableCell className="font-medium">{currencyBRL(order.total)}</TableCell>
+      <TableCell className="font-medium">
+        {currencyBRL(order.total / 100)}
+      </TableCell>
       <TableCell>
         <Button variant="outline" size="xs">
           <ArrowRight className="mr-2 h-3 w-3" />
