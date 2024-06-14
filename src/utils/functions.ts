@@ -2,6 +2,9 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { z } from 'zod'
 
+import { IOrderStatus } from '@/api/get-orders'
+import { IChangeStatusOptions } from '@/api/update-status-order'
+
 export const parsedPageIndex = (page: string) => {
   const pageSchema = z.preprocess((arg) => {
     const str = typeof arg === 'string' ? arg : undefined
@@ -25,6 +28,38 @@ export function timeAgo(dateStr: string) {
     locale: ptBR,
     addSuffix: true,
   })
+}
+
+type IChangeStatusOptionsFn = (status: IOrderStatus) => IChangeStatusOptions
+
+export const returnChangeStatusOptions: IChangeStatusOptionsFn = (status) => {
+  switch (status) {
+    case 'pending':
+      return {
+        label: 'Aprovar',
+        newStatus: 'processing',
+        updateKey: 'approve',
+      }
+    case 'processing':
+      return {
+        label: 'Em entrega',
+        newStatus: 'delivering',
+        updateKey: 'dispatch',
+      }
+    case 'delivering':
+    case 'delivered':
+      return {
+        label: 'Entregue',
+        newStatus: 'delivered',
+        updateKey: 'deliver',
+      }
+    case 'canceled':
+      return {
+        label: 'Cancelar',
+        newStatus: 'canceled',
+        updateKey: 'cancel',
+      }
+  }
 }
 
 export function generateRandomColorVariant(
