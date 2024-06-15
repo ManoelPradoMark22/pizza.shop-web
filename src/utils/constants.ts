@@ -41,4 +41,9 @@ export const QUERY_KEYS = {
   GET_MANAGED_RESTAURANT_KEY: ['get-managed-restaurant'],
   GET_ORDERS: 'get-orders',
   GET_ORDER_DETAILS: 'get-order-details',
+  GET_METRICS: 'metrics',
+  GET_DAY_ORDERS_AMOUNT: 'metrics',
+  GET_MONTH_ORDERS_AMOUNT: 'month-orders-amount',
+  GET_MONTH_CANCELED_ORDERS_AMOUNT: 'month-canceled-orders-amount',
+  GET_MONTH_RECEIPT: 'month-receipt',
 } as const

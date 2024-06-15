@@ -23,6 +23,10 @@ export function currencyBRL(value: number) {
   })
 }
 
+export function numberBRL(value: number) {
+  return value.toLocaleString('pt-BR')
+}
+
 export function timeAgo(dateStr: string) {
   return formatDistanceToNow(dateStr, {
     locale: ptBR,

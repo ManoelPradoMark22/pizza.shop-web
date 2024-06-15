@@ -1,8 +1,21 @@
+import { useQuery } from '@tanstack/react-query'
 import { DollarSign } from 'lucide-react'
 
+import { getMonthReceipt } from '@/api/get-orders-amount'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { QUERY_KEYS } from '@/utils/constants'
+import { currencyBRL, numberBRL } from '@/utils/functions'
+
+import { MetricCardSkeleton } from './skeletons/metric-card-skeleton'
+
+const { GET_METRICS, GET_MONTH_RECEIPT } = QUERY_KEYS
 
 export function MonthRevenueCard() {
+  const { data: monthReceipt } = useQuery({
+    queryFn: () => getMonthReceipt(),
+    queryKey: [GET_METRICS, GET_MONTH_RECEIPT],
+  })
+
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
@@ -12,11 +25,38 @@ export function MonthRevenueCard() {
         <DollarSign className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">R$ 1.3555,68</span>
-        <p className="text-xs text-muted-foreground">
-          <span className="text-emerald-500 dark:text-emerald-400">+2%</span> em
-          relação ao mês passado
-        </p>
+        {monthReceipt ? (
+          <>
+            <span className="text-2xl font-bold tracking-tight">
+              {currencyBRL(monthReceipt.receipt / 100)}
+            </span>
+            <p className="text-xs text-muted-foreground">
+              {monthReceipt.diffFromLastMonth >= 0 ? (
+                <>
+                  <span
+                    className={
+                      monthReceipt.diffFromLastMonth === 0
+                        ? 'text-slate-950 dark:text-slate-50'
+                        : 'text-emerald-500 dark:text-emerald-400'
+                    }
+                  >
+                    +{numberBRL(monthReceipt.diffFromLastMonth)}%
+                  </span>{' '}
+                  em relação ao mês passado
+                </>
+              ) : (
+                <>
+                  <span className="text-rose-500 dark:text-rose-400">
+                    {numberBRL(monthReceipt.diffFromLastMonth)}%
+                  </span>{' '}
+                  em relação ao mês passado
+                </>
+              )}
+            </p>
+          </>
+        ) : (
+          <MetricCardSkeleton />
+        )}
       </CardContent>
     </Card>
   )
