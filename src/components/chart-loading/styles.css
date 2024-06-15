@@ -1,0 +1,17 @@
+@keyframes reveal {
+  0% {
+    clip-path: polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%);
+  }
+  50% {
+    clip-path: polygon(0% 100%, 50% 100%, 50% 50%, 0% 50%);
+  }
+  100% {
+    clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+}
+
+.loading-trending-up svg {
+  animation: reveal 1.5s infinite;
+  width: 100px;
+  height: 100px;
+}

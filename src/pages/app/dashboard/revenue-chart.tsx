@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   CartesianGrid,
   Line,
@@ -9,6 +10,8 @@ import {
 } from 'recharts'
 import colors from 'tailwindcss/colors'
 
+import { getDailyReceiptInPeriod } from '@/api/get-metrics'
+import { LoadingTrendingUp } from '@/components/chart-loading'
 import {
   Card,
   CardContent,
@@ -16,43 +19,24 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { currencyBRL } from '@/utils/functions'
+import { QUERY_KEYS } from '@/utils/constants'
+import { currencyBRL, returnLargestRevenue } from '@/utils/functions'
 
-type IRevenueChartData = {
-  date: string
-  revenue: number
-}
-
-const data: IRevenueChartData[] = [
-  { date: '10/12', revenue: 803.5 },
-  { date: '11/12', revenue: 820 },
-  { date: '12/12', revenue: 1901.33 },
-  { date: '13/12', revenue: 434.5 },
-  { date: '14/12', revenue: 2302 },
-  { date: '15/12', revenue: 822.55 },
-  { date: '16/12', revenue: 643.4 },
-]
-
-function returnLargestRevenue(data: IRevenueChartData[]) {
-  let largest = 0
-
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].revenue > largest) {
-      largest = data[i].revenue
-    }
-  }
-
-  return largest
-}
+const { GET_METRICS, GET_RECEIPT_IN_PERIOD } = QUERY_KEYS
 
 export function RevenueChart() {
+  const { data: dailyReceiptInPeriod } = useQuery({
+    queryFn: getDailyReceiptInPeriod,
+    queryKey: [GET_METRICS, GET_RECEIPT_IN_PERIOD],
+  })
+
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
   let stickWidth = 80
 
-  if (canvas) {
+  if (dailyReceiptInPeriod && canvas) {
     const ctx = canvas.getContext('2d')
     if (ctx) {
-      const largestRevenue = returnLargestRevenue(data)
+      const largestRevenue = returnLargestRevenue(dailyReceiptInPeriod)
       const largestRevenueFormatted = currencyBRL(largestRevenue)
 
       const widthToIncrease = ctx.measureText(largestRevenueFormatted).width
@@ -71,32 +55,38 @@ export function RevenueChart() {
         </div>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={240}>
-          <LineChart style={{ fontsize: 12 }} data={data}>
-            <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
+        {dailyReceiptInPeriod ? (
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart style={{ fontsize: 12 }} data={dailyReceiptInPeriod}>
+              <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
 
-            <YAxis
-              stroke="#888"
-              axisLine={false}
-              tickLine={false}
-              width={stickWidth}
-              tickFormatter={(value: number) => currencyBRL(value)}
-            />
-            <CartesianGrid vertical={false} className="stroke-muted" />
-            <Tooltip
-              formatter={(value: number) => currencyBRL(value)}
-              itemStyle={{ fontWeight: 700 }}
-              contentStyle={{ backgroundColor: 'var(--background)' }}
-            />
-            <Line
-              type="linear"
-              name="Receita"
-              strokeWidth={2}
-              dataKey="revenue"
-              stroke={colors.violet['500']}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+              <YAxis
+                stroke="#888"
+                axisLine={false}
+                tickLine={false}
+                width={stickWidth}
+                tickFormatter={(value: number) => currencyBRL(value / 100)}
+              />
+              <CartesianGrid vertical={false} className="stroke-muted" />
+              <Tooltip
+                formatter={(value: number) => currencyBRL(value / 100)}
+                itemStyle={{ fontWeight: 700 }}
+                contentStyle={{ backgroundColor: 'var(--background)' }}
+              />
+              <Line
+                type="linear"
+                name="Receita"
+                strokeWidth={2}
+                dataKey="receipt"
+                stroke={colors.violet['500']}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-[240px] w-full items-center justify-center">
+            <LoadingTrendingUp />
+          </div>
+        )}
       </CardContent>
     </Card>
   )

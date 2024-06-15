@@ -2,6 +2,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { z } from 'zod'
 
+import { IGetDailyReceiptInPeriodResponse } from '@/api/get-metrics'
 import { IOrderStatus } from '@/api/get-orders'
 import { IChangeStatusOptions } from '@/api/update-status-order'
 
@@ -32,6 +33,19 @@ export function timeAgo(dateStr: string) {
     locale: ptBR,
     addSuffix: true,
   })
+}
+
+export function returnLargestRevenue(data: IGetDailyReceiptInPeriodResponse) {
+  let largest = 0
+
+  for (let i = 0; i < data.length; i++) {
+    const receipt = data[i].receipt / 100
+    if (receipt > largest) {
+      largest = receipt
+    }
+  }
+
+  return largest
 }
 
 type IChangeStatusOptionsFn = (status: IOrderStatus) => IChangeStatusOptions

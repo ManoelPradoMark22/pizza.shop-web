@@ -2,11 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { Utensils } from 'lucide-react'
 
 import { getMonthOrdersAmount } from '@/api/get-metrics'
+import { MetricCardSkeleton } from '@/components/skeletons/metric-card-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { QUERY_KEYS } from '@/utils/constants'
 import { numberBRL } from '@/utils/functions'
-
-import { MetricCardSkeleton } from './skeletons/metric-card-skeleton'
 
 const { GET_METRICS, GET_MONTH_ORDERS_AMOUNT } = QUERY_KEYS
 
