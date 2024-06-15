@@ -19,6 +19,11 @@ export interface IGetMonthReceiptResponse {
   diffFromLastMonth: number
 }
 
+export type IGetPopularProductsResponse = {
+  product: string
+  amount: number
+}[]
+
 export async function getDayOrdersAmount() {
   const response = await api.get<IGetDayOrdersAmountResponse>(
     '/metrics/day-orders-amount',
@@ -40,6 +45,14 @@ export async function getMonthOrdersAmount({
 export async function getMonthReceipt() {
   const response = await api.get<IGetMonthReceiptResponse>(
     '/metrics/month-receipt',
+  )
+
+  return response.data
+}
+
+export async function getPopularProducts() {
+  const response = await api.get<IGetPopularProductsResponse>(
+    '/metrics/popular-products',
   )
 
   return response.data

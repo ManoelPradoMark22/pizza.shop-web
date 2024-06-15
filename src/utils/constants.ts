@@ -46,4 +46,5 @@ export const QUERY_KEYS = {
   GET_MONTH_ORDERS_AMOUNT: 'month-orders-amount',
   GET_MONTH_CANCELED_ORDERS_AMOUNT: 'month-canceled-orders-amount',
   GET_MONTH_RECEIPT: 'month-receipt',
+  GET_POPULAR_PRODUCTS: 'popular-products',
 } as const

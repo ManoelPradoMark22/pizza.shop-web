@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Ban } from 'lucide-react'
 
-import { getMonthOrdersAmount } from '@/api/get-orders-amount'
+import { getMonthOrdersAmount } from '@/api/get-metrics'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { QUERY_KEYS } from '@/utils/constants'
 import { numberBRL } from '@/utils/functions'
