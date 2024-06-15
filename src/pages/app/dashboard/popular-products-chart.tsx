@@ -48,11 +48,11 @@ export function PopularProductsChart() {
                 const x = cx + radius * Math.cos(-midAngle * RADIAN)
                 const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
-                const MAX_LENGTH = 16;
+                const MAX_LENGTH = 16
                 const productInfo = `${
                   data[index].product.length > MAX_LENGTH
-                      ? data[index].product.substring(0, MAX_LENGTH).concat('...')
-                      : `${data[index].product}${' '}`
+                    ? data[index].product.substring(0, MAX_LENGTH).concat('...')
+                    : `${data[index].product}${' '}`
                 }(${value})`
 
                 return (

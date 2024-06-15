@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { QUERY_KEYS } from '@/utils/constants'
 import { currencyBRL, timeAgo } from '@/utils/functions'
 
 export interface OrderDetailsProps {
@@ -24,9 +25,11 @@ export interface OrderDetailsProps {
   isOpen: boolean
 }
 
+const { GET_ORDER_DETAILS } = QUERY_KEYS
+
 export function OrderDetails({ orderId, isOpen }: OrderDetailsProps) {
   const { data: order } = useQuery({
-    queryKey: ['order', orderId],
+    queryKey: [GET_ORDER_DETAILS, orderId],
     queryFn: () => getOrderDetails({ orderId }),
     enabled: isOpen,
     staleTime: Infinity,

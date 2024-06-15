@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ArrowRight, Search, X } from 'lucide-react'
 import { useState } from 'react'
 
+import { IGetOrderDetailsResponse } from '@/api/get-order-details'
 import { IGetOrdersResponse, IOrder, IOrderStatus } from '@/api/get-orders'
 import { updateStatusOrder } from '@/api/update-status-order'
 import { OrderStatus } from '@/components/order-status'
@@ -26,7 +27,7 @@ export interface IUpdateOrderStatusOnCache {
   status: IOrderStatus
 }
 
-const { GET_ORDERS } = QUERY_KEYS
+const { GET_ORDERS, GET_ORDER_DETAILS } = QUERY_KEYS
 
 export function OrderTableRow({ order }: IOrderTableRow) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
@@ -58,6 +59,22 @@ export function OrderTableRow({ order }: IOrderTableRow) {
           return order
         }),
       })
+
+      const orderDetailsCache =
+        queryClient.getQueryData<IGetOrderDetailsResponse>([
+          GET_ORDER_DETAILS,
+          orderId,
+        ])
+
+      if (orderDetailsCache) {
+        queryClient.setQueryData<IGetOrderDetailsResponse>(
+          [GET_ORDER_DETAILS, orderId],
+          {
+            ...orderDetailsCache,
+            status,
+          },
+        )
+      }
     })
   }
 
