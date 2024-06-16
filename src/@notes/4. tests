@@ -187,3 +187,22 @@ describe('SignIn', () => {
     expect(emailInput.value).toEqual('manoelprado.aecjr@gmail.com')
   })
 })
+
+
+MOCK SERVICE WORKER (MSW) -> VANTAGEM: nao é uma lib q substitui as chamadas http diretamente pelos dados (adiciona uma tag script e usa os service workers - tendo total controle para o q entra e sai da nossa aplicacao / backend ficticio - o service worker vai retornar os dados das requisicoes https | ou seja, vc vai continuar vendo as requisicoes na aba network etc, diferente de outras ferramentas)
+https://mswjs.io/docs/getting-started
+
+npm i -D msw
+
+
+init: 
+https://mswjs.io/docs/cli/init
+
+npx msw init <PUBLIC_DIR> [options]  // onde fica a nossa pasta public
+npx msw init public
+
+
+faça as configs necessarias
+
+e inicie a aplicacao como: 
+npm run dev:test
