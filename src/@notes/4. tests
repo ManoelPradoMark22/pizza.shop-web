@@ -127,3 +127,33 @@ describe('Pagination', () => {
   !!!!Interessante: onPageChangeCallback.mock.calls  -> informa quantas vezes foi chamado e com qual parametro foi chamado
    -> exemplo: se foi chamado duas vezes, a 1ª com param 2 e a 2ª com param 5 -> [[2], [5]]
   por isso a importancia de limpar antes de cada um tb, para zerar antes de cada teste
+
+
+  -----------------
+
+
+  WRAPPER:
+  https://testing-library.com/docs/react-testing-library/setup#custom-render
+
+
+describe('NavLink', () => {
+  it('should highlight the properly nav link based in the current page link', () => {
+    const wrapper = render(<NavLink to="about" >About</NavLink>, {
+      wrapper: ({children}) => { //podemos passar nossos providers aqui!
+        return (
+          <MemoryRouter initialEntries={['/about']}>{children}</MemoryRouter>
+        )
+      }
+    })
+  })
+})
+
+nav link precisa estar dentro do provider ROUTER
+mas atenção, nos testes nao podemos usar o createBrowserRouter (pois nao estamos em um browser, e sim em uma DOM nos testes)
+entao, para testes usamos: MemoryRouter (a rota ativa é salva me memoria)
+
+em javascript para buscar os data atributes (atributos que comecam com data) usamos
+
+por exemplo, no nav link pegamos o data-current
+
+expect(wrapper.getByText('About').dataset.current).toEqual('true')

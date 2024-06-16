@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1718561083352" clover="3.2.0">
-  <project timestamp="1718561083353" name="All files">
-    <metrics statements="4001" coveredstatements="182" conditionals="79" coveredconditionals="17" methods="69" coveredmethods="8" elements="4149" coveredelements="207" complexity="0" loc="4001" ncloc="4001" packages="15" files="65" classes="65"/>
+<coverage generated="1718562877948" clover="3.2.0">
+  <project timestamp="1718562877948" name="All files">
+    <metrics statements="4001" coveredstatements="197" conditionals="79" coveredconditionals="18" methods="69" coveredmethods="9" elements="4149" coveredelements="224" complexity="0" loc="4001" ncloc="4001" packages="15" files="65" classes="65"/>
     <package name="pizza.shop-web">
       <metrics statements="83" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="postcss.config.js" path="/home/manoelprado/Study/Rocketseat/Ignite/ReactJs/pizza.shop-web/postcss.config.js">
@@ -498,7 +498,7 @@
       </file>
     </package>
     <package name="pizza.shop-web.src.components">
-      <metrics statements="491" coveredstatements="117" conditionals="20" coveredconditionals="15" methods="12" coveredmethods="7"/>
+      <metrics statements="491" coveredstatements="132" conditionals="20" coveredconditionals="16" methods="12" coveredmethods="8"/>
       <file name="account-menu.tsx" path="/home/manoelprado/Study/Rocketseat/Ignite/ReactJs/pizza.shop-web/src/components/account-menu.tsx">
         <metrics statements="109" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
@@ -693,22 +693,22 @@
         <line num="34" count="0" type="stmt"/>
       </file>
       <file name="nav-link.tsx" path="/home/manoelprado/Study/Rocketseat/Ignite/ReactJs/pizza.shop-web/src/components/nav-link.tsx">
-        <metrics statements="15" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+        <metrics statements="15" coveredstatements="15" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
       </file>
       <file name="order-status.tsx" path="/home/manoelprado/Study/Rocketseat/Ignite/ReactJs/pizza.shop-web/src/components/order-status.tsx">
         <metrics statements="41" coveredstatements="41" conditionals="7" coveredconditionals="7" methods="2" coveredmethods="2"/>
