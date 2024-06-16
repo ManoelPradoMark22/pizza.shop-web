@@ -157,3 +157,33 @@ em javascript para buscar os data atributes (atributos que comecam com data) usa
 por exemplo, no nav link pegamos o data-current
 
 expect(wrapper.getByText('About').dataset.current).toEqual('true')
+
+------------------
+
+
+
+describe('SignIn', () => {
+  it('should default email input value if email is present on search params', () => {
+    const wrapper = render(<SignIn />, {
+      wrapper: ({ children }) => {
+        return (
+          <HelmetProvider>
+            <MemoryRouter
+              initialEntries={['/sign-in?email=manoelprado.aecjr@gmail.com']}
+            >
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
+            </MemoryRouter>
+          </HelmetProvider>
+        )
+      },
+    })
+    // wrapper.debug()
+
+    console.log(wrapper.getByLabelText('Seu e-mail').outerHTML)  //NAO APARECE no console log o value como o email
+    const emailInput = wrapper.getByLabelText('Seu e-mail') as HTMLInputElement
+    console.log(emailInput.value) //aqui ele aparece no console o value
+    expect(emailInput.value).toEqual('manoelprado.aecjr@gmail.com')
+  })
+})
