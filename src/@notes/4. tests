@@ -90,3 +90,40 @@ https://levelup.gitconnected.com/the-difference-between-get-find-query-react-tes
 //find -> procura um(by)/varios(all) elemento / retorna uma PROMISE
 //get -> procura um(by)/varios(all) elemento / se nao encontrar dá erro
 //query -> procura um(by)/varios(all) elemento / se nao encontrar NÃO da erro, mas retorna um NULL
+
+----------------------------
+
+vitest coverage:
+https://vitest.dev/guide/coverage.html
+
+https://github.com/ManoelPradoMark22/pizza.shop-web/commit/da46b27d98485d5f95b03cb807f544386e7ab8c2
+
+----------------------
+
+
+const nextPageButton = wrapper.getByRole('button') 
+podemos setar manualmente o aria-role no elemento, mas alguns ja possuem por default, como o button
+
+
+-------------------
+
+
+npm i -D @testing-library/user-event
+permite realizarmos eventos (cliques, digitacao etc.....)
+https://testing-library.com/docs/user-event/intro/
+
+SPIES:
+
+const onPageChangeCallback = vi.fn() // spie
+
+describe('Pagination', () => {
+  beforeEach(() => {
+    onPageChangeCallback.mockClear()
+  }) //IMPORTANTE LIMPAR PARA NAO TER A POSSIBILIDADE DE FALSO POSITIVO!
+
+  it('shoul.......................
+
+
+  !!!!Interessante: onPageChangeCallback.mock.calls  -> informa quantas vezes foi chamado e com qual parametro foi chamado
+   -> exemplo: se foi chamado duas vezes, a 1ª com param 2 e a 2ª com param 5 -> [[2], [5]]
+  por isso a importancia de limpar antes de cada um tb, para zerar antes de cada teste
