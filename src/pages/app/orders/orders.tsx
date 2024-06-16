@@ -4,10 +4,13 @@ import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { getOrders } from '@/api/get-orders'
+import { DataStatus } from '@/components/data-status'
 import { Pagination } from '@/components/pagination'
+import { OrderTableSkeleton } from '@/components/skeletons/order-table-skeleton'
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -36,7 +39,12 @@ export function Orders() {
     .transform((page) => page - 1)
     .parse(parsedPageIndex(pageParam) ?? 1)
 
-  const { data: result } = useQuery({
+  const {
+    data: result,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: [
       GET_ORDERS,
       pageIndex,
@@ -55,13 +63,17 @@ export function Orders() {
     staleTime: Infinity,
   })
 
+  const reFetchOrders = () => {
+    refetch()
+  }
+
   function handlePaginate(pageIndex: number) {
     setSearchParams((state) => {
       state.set('page', (pageIndex + 1).toString())
       return state
     })
   }
-
+  const isLoadingOrders = isLoading && !isError
   return (
     <>
       <Helmet title="Pedidos" />
@@ -86,6 +98,30 @@ export function Orders() {
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {isLoadingOrders ? (
+                  <OrderTableSkeleton />
+                ) : !result ? (
+                  <TableRow>
+                    <TableCell colSpan={8}>
+                      <DataStatus
+                        type="error"
+                        size={35}
+                        refetch={reFetchOrders}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ) : result.orders.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8}>
+                      <DataStatus type="no-data" size={35} />
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  result.orders.map((order) => {
+                    return <OrderTableRow key={order.orderId} order={order} />
+                  })
+                )}
+
                 {result &&
                   result.orders.map((order) => {
                     return <OrderTableRow key={order.orderId} order={order} />
