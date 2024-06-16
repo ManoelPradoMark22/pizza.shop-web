@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { getOrderDetails } from '@/api/get-order-details'
+import { DataStatus } from '@/components/data-status'
 import { OrderStatus } from '@/components/order-status'
+import { OrderDetailsSkeleton } from '@/components/skeletons/order-details-skeleton'
 import {
   DialogContent,
   DialogDescription,
@@ -28,13 +30,24 @@ export interface OrderDetailsProps {
 const { GET_ORDER_DETAILS } = QUERY_KEYS
 
 export function OrderDetails({ orderId, isOpen }: OrderDetailsProps) {
-  const { data: order } = useQuery({
+  const {
+    data: order,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: [GET_ORDER_DETAILS, orderId],
     queryFn: () => getOrderDetails({ orderId }),
     enabled: isOpen,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   })
+
+  const reFetchOrderDetails = () => {
+    refetch()
+  }
+
+  const isLoadingOrderDetails = isLoading && !isError
 
   return (
     <DialogContent>
@@ -43,7 +56,13 @@ export function OrderDetails({ orderId, isOpen }: OrderDetailsProps) {
         <DialogDescription>Detalhes do pedido</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {isLoadingOrderDetails ? (
+        <OrderDetailsSkeleton />
+      ) : !order ? (
+        <div className="flex items-center justify-center">
+          <DataStatus type="error" size={35} refetch={reFetchOrderDetails} />
+        </div>
+      ) : (
         <div className="space-y-6">
           <Table>
             <TableBody>
