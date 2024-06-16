@@ -23,8 +23,6 @@ const pickColor = ({ status }: IOrderStatusProps) => {
     case 'processing':
     case 'delivering':
       return 'bg-amber-500'
-    default:
-      return 'bg-slate-400'
   }
 }
 
