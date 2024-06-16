@@ -190,6 +190,10 @@ describe('SignIn', () => {
 
 
 MOCK SERVICE WORKER (MSW) -> VANTAGEM: nao é uma lib q substitui as chamadas http diretamente pelos dados (adiciona uma tag script e usa os service workers - tendo total controle para o q entra e sai da nossa aplicacao / backend ficticio - o service worker vai retornar os dados das requisicoes https | ou seja, vc vai continuar vendo as requisicoes na aba network etc, diferente de outras ferramentas)
+
+commit: setup msw
+https://github.com/ManoelPradoMark22/pizza.shop-web/commit/b351ebaaba02f7a9da0a345923a762100f6b9c75
+
 https://mswjs.io/docs/getting-started
 
 npm i -D msw
