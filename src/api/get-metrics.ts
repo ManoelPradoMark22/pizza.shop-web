@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import { formatSimpleDate } from '@/utils/functions'
 
 interface IGetMonthOrdersAmountProps {
   typeAmount: 'month-orders-amount' | 'month-canceled-orders-amount'
@@ -23,6 +24,11 @@ export type IGetPopularProductsResponse = {
   product: string
   amount: number
 }[]
+
+export type IGetDailyReceiptInPeriodProps = {
+  from?: Date
+  to?: Date
+}
 
 export type IGetDailyReceiptInPeriodResponse = {
   date: string
@@ -63,9 +69,18 @@ export async function getPopularProducts() {
   return response.data
 }
 
-export async function getDailyReceiptInPeriod() {
+export async function getDailyReceiptInPeriod({
+  from,
+  to,
+}: IGetDailyReceiptInPeriodProps) {
   const response = await api.get<IGetDailyReceiptInPeriodResponse>(
     '/metrics/daily-receipt-in-period',
+    {
+      params: {
+        from: from ? formatSimpleDate(from) : from,
+        to: to ? formatSimpleDate(to) : to,
+      },
+    },
   )
 
   return response.data

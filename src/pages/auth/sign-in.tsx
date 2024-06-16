@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { signIn } from '@/api/sign-in'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { signIn } from '@/api/sign-in'
 
 const signInForm = z.object({
   email: z.string().email('E-mail inválido'),
@@ -32,7 +32,7 @@ export function SignIn() {
   })
 
   const { mutateAsync: authenticate } = useMutation({
-    mutationFn: signIn
+    mutationFn: signIn,
   })
 
   async function handleSignIn(data: ISignInForm) {
@@ -46,7 +46,7 @@ export function SignIn() {
           onClick: () => handleSignIn(data),
         },
       })
-    }catch (e){
+    } catch (e) {
       toast.error('Credenciais inválidas')
     }
   }

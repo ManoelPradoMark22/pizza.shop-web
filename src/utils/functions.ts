@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { z } from 'zod'
 
@@ -35,11 +35,15 @@ export function timeAgo(dateStr: string) {
   })
 }
 
+export function formatSimpleDate(date: Date) {
+  return format(date, 'MM-dd-yyyy')
+}
+
 export function returnLargestRevenue(data: IGetDailyReceiptInPeriodResponse) {
   let largest = 0
 
   for (let i = 0; i < data.length; i++) {
-    const receipt = data[i].receipt / 100
+    const receipt = data[i].receipt
     if (receipt > largest) {
       largest = receipt
     }
