@@ -31,7 +31,10 @@ const pickColor = ({ status }: IOrderStatusProps) => {
 export function OrderStatus({ status }: IOrderStatusProps) {
   return (
     <div className="flex items-center gap-2">
-      <span className={`h-2 w-2 rounded-full ${pickColor({ status })}`} />
+      <span
+        data-testid="badge"
+        className={`h-2 w-2 rounded-full ${pickColor({ status })}`}
+      />
       <span className="font-medium text-muted-foreground">
         {orderStatusMap[status]}
       </span>

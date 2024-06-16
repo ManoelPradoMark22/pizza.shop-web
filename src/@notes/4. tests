@@ -1,0 +1,89 @@
+(instale todas como Desenvolvimento)
+
+
+https://vitest.dev/config/#globals
+
+https://testing-library.com/docs/react-testing-library/intro
+
+https://testing-library.com/docs/ecosystem-jest-dom/
+install too -> npm i -D @testing-library/jest-dom
+
+create setup file: test/setup.ts
+
+vite.config.ts -> make configs in this file
+tsconfig.json  ->   "include": ["src", "test"],
+
+
+
+mais famosa
+https://github.com/jsdom/jsdom
+
+reimplementacao do jsdom, mas muito mais rápida! (e config mais simples)
+ ---->>   https://github.com/capricorn86/happy-dom   
+
+
+
+ ---------------------------
+
+ first test: order-status.spec
+
+
+ import { render } from '@testing-library/react'
+
+import { OrderStatus } from './order-status'
+
+describe('Order Status', () => {
+  it('should display the right text based on order status', () => {
+    const wrapper = render(<OrderStatus status="pending" />)
+
+    wrapper.debug()
+  })
+})
+
+note que o retorno do render pode ser desestruturado (temos varios metodos para usar)
+um deles é o .debug() -> mostra no terminal o HTML gerado por essa renderizacao
+
+<body>
+  <div>
+    <div
+      class="flex items-center gap-2"
+    >
+      <span
+        class="h-2 w-2 rounded-full bg-slate-400"
+      />
+      <span
+        class="font-medium text-muted-foreground"
+      >
+        Pendente
+      </span>
+    </div>
+  </div>
+</body>
+
+
+expect(wrapper.getByText('Pendente'))
+o metodo .getByText()  -> espero encontrar um elemento cujo texto seja 'Pendente"
+
+-----------------
+
+describe('Order Status', () => {
+  it('should display the right text based on order status', () => {
+    const wrapper = render(<OrderStatus status="pending" />)
+
+    // wrapper.debug()
+
+    const statusText = wrapper.getByText('Pendente')
+
+    console.log(statusText.outerHTML) // shows: <span class="font-medium text-muted-foreground">Pendente</span>
+
+    expect(statusText).toBeInTheDocument()
+  })
+})
+
+----------------
+
+https://levelup.gitconnected.com/the-difference-between-get-find-query-react-testing-library-bcd996ba3baa
+
+//find -> procura um(by)/varios(all) elemento / retorna uma PROMISE
+//get -> procura um(by)/varios(all) elemento / se nao encontrar dá erro
+//query -> procura um(by)/varios(all) elemento / se nao encontrar NÃO da erro, mas retorna um NULL
