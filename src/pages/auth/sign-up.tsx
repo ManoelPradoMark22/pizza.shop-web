@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { registerRestaurant } from '@/api/register-restaurant'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useMutation } from '@tanstack/react-query'
-import { registerRestaurant } from '@/api/register-restaurant'
 
 const signUpForm = z.object({
   restaurantName: z.string().min(1, 'Insira o nome do seu estabelecimento.'),
@@ -38,16 +38,16 @@ export function SignUp() {
   })
 
   const { mutateAsync: registerRestaurantFn } = useMutation({
-    mutationFn: registerRestaurant
+    mutationFn: registerRestaurant,
   })
 
   async function handleSignUp(data: ISignUpForm) {
-    try{
+    try {
       await registerRestaurantFn({
-        email: data.email ,
-        managerName: data.managerName ,
-        restaurantName: data.restaurantName ,
-        phone: data.phone ,
+        email: data.email,
+        managerName: data.managerName,
+        restaurantName: data.restaurantName,
+        phone: data.phone,
       })
 
       toast.success('Restaurante cadastrado com sucesso.', {
@@ -55,7 +55,7 @@ export function SignUp() {
         description: 'Agora, faça login para acessar o Dashboard.',
       })
       navigate(`/sign-in?email=${data.email}`)
-    }catch(e) {
+    } catch (e) {
       toast.error('Erro ao cadastrar restaurante.')
     }
   }
