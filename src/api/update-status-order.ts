@@ -10,8 +10,11 @@ export type IChangeStatusOptions = {
   updateKey: IUpdateKey
 }
 
-export interface IUpdateStatusOrderParams {
+export interface IOrderIdParam {
   orderId: string
+}
+
+export interface IUpdateStatusOrderParams extends IOrderIdParam {
   changeStatusOptions: IChangeStatusOptions
 }
 
