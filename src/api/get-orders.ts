@@ -7,7 +7,7 @@ export interface IGetOrderQuery {
   status?: string | null
 }
 
-const orderStatus = [
+export const orderStatusArray = [
   'pending',
   'canceled',
   'processing',
@@ -15,7 +15,7 @@ const orderStatus = [
   'delivered',
 ] as const
 
-export type IOrderStatus = (typeof orderStatus)[number]
+export type IOrderStatus = (typeof orderStatusArray)[number]
 
 export interface IOrder {
   orderId: string

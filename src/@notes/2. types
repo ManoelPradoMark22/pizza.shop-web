@@ -53,3 +53,37 @@ export function OrderTableFilters() {
       return state
     })
   }
+
+
+--------------------
+
+
+export interface IGetOrdersResponse {
+  orders: {
+    orderId: string
+    createdAt: string
+    status: IOrderStatus
+    customerName: string
+    total: number
+  }[]
+  meta: {
+    pageIndex: number
+    perPage: number
+    totalCount: number
+  }
+}
+
+
+import type { IGetOrdersResponse } from '../get-orders'
+
+type IOrders = IGetOrdersResponse['orders']  // queremos extrair de IGetOrdersResponse apenas o type de 'orders' sem precisar criar um type separado
+
+const orders: IOrders = Array.from({length: 60}).map((_,i) => {
+  return {
+    orderId: ,
+    createdAt: ,
+    status: ,
+    customerName: ,
+    total: ,
+  }
+})

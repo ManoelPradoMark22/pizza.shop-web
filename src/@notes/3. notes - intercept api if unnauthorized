@@ -3,3 +3,13 @@ SEE: src/pages/_layouts/app.tsx
 funcao de limpezado useEffect tb
 
 https://github.com/ManoelPradoMark22/pizza.shop-web/commit/bfee6caae501718c361fc9427a13d7d1e18062e8
+
+added a miss peace of code in app.tsx (else):
+https://github.com/ManoelPradoMark22/pizza.shop-web/commit/35652743dbb99058f56f6c1c06339e641ad53d23
+
+          if (status === 401 && code === 'UNAUTHORIZED') {
+            navigate('/sign-in', { replace: true })
+            queryClient.clear()
+          } else {
+            throw error
+          }
