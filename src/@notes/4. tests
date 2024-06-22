@@ -1,7 +1,7 @@
 playwright - tests E2E
 https://playwright.dev/
 
-example:
+example:  test/sign-in.e2e-spec.ts
 
 import { expect, test } from '@playwright/test'
 
