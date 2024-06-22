@@ -22,6 +22,8 @@ export function AppLayout() {
           if (status === 401 && code === 'UNAUTHORIZED') {
             navigate('/sign-in', { replace: true })
             queryClient.clear()
+          } else {
+            throw error
           }
         }
       },
