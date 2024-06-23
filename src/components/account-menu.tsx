@@ -58,6 +58,7 @@ export function AccountMenu() {
           <Button
             variant="outline"
             className="flex select-none items-center gap-2"
+            data-testid="account-menu-btn"
           >
             {isLoadingManagedRestaurant ? (
               <Skeleton className="h-4 w-40" />
@@ -84,7 +85,11 @@ export function AccountMenu() {
             )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DialogTrigger asChild disabled={isLoadingManagedRestaurant}>
+          <DialogTrigger
+            asChild
+            disabled={isLoadingManagedRestaurant}
+            data-testid="update-profile-btn"
+          >
             <DropdownMenuItem>
               <Building className="mr-2 h-4 w-4" />
               <span>Perfil da loja</span>
