@@ -7,6 +7,8 @@ test('sign in successfully', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Acessar painel' }).click()
 
+  await page.waitForLoadState('networkidle')
+
   const toast = page.getByText(
     'Enviamos um link de autenticação para o seu e-mail.',
   )
@@ -20,6 +22,8 @@ test('sign in with wrong credentials', async ({ page }) => {
   await page.getByLabel('Seu e-mail').fill('wrong@gmail.com')
 
   await page.getByRole('button', { name: 'Acessar painel' }).click()
+
+  await page.waitForLoadState('networkidle')
 
   const toast = page.getByText('Credenciais inválidas')
 

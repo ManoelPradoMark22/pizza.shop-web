@@ -346,17 +346,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { zodResolver } from '@hookform/resolvers/zod'</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { useMutation } from '@tanstack/react-query'</span>
 <span class="cstat-no" title="statement not covered" >import { Helmet } from 'react-helmet-async'</span>
 <span class="cstat-no" title="statement not covered" >import { FieldErrors, useForm } from 'react-hook-form'</span>
 <span class="cstat-no" title="statement not covered" >import { Link, useNavigate } from 'react-router-dom'</span>
 <span class="cstat-no" title="statement not covered" >import { toast } from 'sonner'</span>
 <span class="cstat-no" title="statement not covered" >import { z } from 'zod'</span>
 <span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import { registerRestaurant } from '@/api/register-restaurant'</span>
 <span class="cstat-no" title="statement not covered" >import { Button } from '@/components/ui/button'</span>
 <span class="cstat-no" title="statement not covered" >import { Input } from '@/components/ui/input'</span>
 <span class="cstat-no" title="statement not covered" >import { Label } from '@/components/ui/label'</span>
-<span class="cstat-no" title="statement not covered" >import { useMutation } from '@tanstack/react-query'</span>
-<span class="cstat-no" title="statement not covered" >import { registerRestaurant } from '@/api/register-restaurant'</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const signUpForm = z.object({</span>
 <span class="cstat-no" title="statement not covered" >  restaurantName: z.string().min(1, 'Insira o nome do seu estabelecimento.'),</span>
@@ -385,16 +385,16 @@
 <span class="cstat-no" title="statement not covered" >  })</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const { mutateAsync: registerRestaurantFn } = useMutation({</span>
-<span class="cstat-no" title="statement not covered" >    mutationFn: registerRestaurant</span>
+<span class="cstat-no" title="statement not covered" >    mutationFn: registerRestaurant,</span>
 <span class="cstat-no" title="statement not covered" >  })</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  async function handleSignUp(data: ISignUpForm) {</span>
-<span class="cstat-no" title="statement not covered" >    try{</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      await registerRestaurantFn({</span>
-<span class="cstat-no" title="statement not covered" >        email: data.email ,</span>
-<span class="cstat-no" title="statement not covered" >        managerName: data.managerName ,</span>
-<span class="cstat-no" title="statement not covered" >        restaurantName: data.restaurantName ,</span>
-<span class="cstat-no" title="statement not covered" >        phone: data.phone ,</span>
+<span class="cstat-no" title="statement not covered" >        email: data.email,</span>
+<span class="cstat-no" title="statement not covered" >        managerName: data.managerName,</span>
+<span class="cstat-no" title="statement not covered" >        restaurantName: data.restaurantName,</span>
+<span class="cstat-no" title="statement not covered" >        phone: data.phone,</span>
 <span class="cstat-no" title="statement not covered" >      })</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      toast.success('Restaurante cadastrado com sucesso.', {</span>
@@ -402,7 +402,7 @@
 <span class="cstat-no" title="statement not covered" >        description: 'Agora, faça login para acessar o Dashboard.',</span>
 <span class="cstat-no" title="statement not covered" >      })</span>
 <span class="cstat-no" title="statement not covered" >      navigate(`/sign-in?email=${data.email}`)</span>
-<span class="cstat-no" title="statement not covered" >    }catch(e) {</span>
+<span class="cstat-no" title="statement not covered" >    } catch (e) {</span>
 <span class="cstat-no" title="statement not covered" >      toast.error('Erro ao cadastrar restaurante.')</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
@@ -493,7 +493,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-16T19:45:49.643Z
+                at 2024-06-25T22:41:14.531Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
